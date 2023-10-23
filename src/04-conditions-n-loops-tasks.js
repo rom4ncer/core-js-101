@@ -397,8 +397,14 @@ function isBracketsBalanced(str) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  let number = num;
+  let result = '';
+  while (number > 0) {
+    result = (number % n) + result;
+    number = Math.floor(number / n);
+  }
+  return result;
 }
 
 
@@ -414,8 +420,26 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const arr = pathes.map((path) => path.split('/'));
+  let common = '';
+  let answer = '';
+  let flag = 'run';
+  for (let i = 0; i < arr[0].length; i += 1) {
+    common = arr[0][i];
+    for (let j = 0; j < pathes.length; j += 1) {
+      if (arr[j][i] !== common) {
+        flag = 'stop';
+        break;
+      }
+    }
+    if (flag === 'stop') {
+      break;
+    } else {
+      answer += `${common}/`;
+    }
+  }
+  return answer;
 }
 
 
@@ -437,8 +461,23 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const outRows = m1.length;
+  const equals = m2.length;
+  const outCols = m2[0].length;
+  const arr = Array(outRows).fill().map(() => Array(outCols).fill(0));
+
+  for (let i = 0; i < outRows; i += 1) {
+    const row = m1[i];
+    for (let j = 0; j < outCols; j += 1) {
+      let sum = 0;
+      for (let k = 0; k < equals; k += 1) {
+        sum += row[k] * m2[k][j];
+      }
+      arr[i][j] = sum;
+    }
+  }
+  return arr;
 }
 
 
@@ -472,8 +511,22 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  for (let i = 0; i < position.length; i += 1) {
+    if (position[i][0] && position[i][0] === position[i][1] && position[i][1] === position[i][2]) {
+      return position[i][0];
+    }
+    if (position[0][i] && position[0][i] === position[1][i] && position[1][i] === position[2][i]) {
+      return position[0][i];
+    }
+  }
+  if (position[0][0] && position[0][0] === position[1][1] && position[1][1] === position[2][2]) {
+    return position[0][0];
+  }
+  if (position[0][2] && position[0][2] === position[1][1] && position[1][1] === position[2][0]) {
+    return position[0][2];
+  }
+  return undefined;
 }
 
 
